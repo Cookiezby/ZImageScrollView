@@ -47,9 +47,10 @@
 }
 
 - (instancetype)initWithFrame:(CGRect)frame withImageURLs:(NSArray *)imageURLs autoScroll:(BOOL)autoScroll unlimited:(BOOL)unlimited{
-    NSArray* images = [self getImageFromURL:imageURLs];
+    NSArray* images = [self getImageFromURL:imageURLs]; //init with imageplaceholder or wait
     return [self initWithFrame:frame withImages:images autoScroll:autoScroll unlimited:unlimited];
 }
+
 
 
 #pragma mark - SetUpFunctions
@@ -174,13 +175,25 @@
     for (NSInteger i = 0; i < imageURLs.count; i++) {
         [[SDWebImageManager sharedManager] downloadImageWithURL:imageURLs[i] options:SDWebImageRetryFailed progress:nil completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
             if (image) {
-                [self updateImageView:image WithIndex:i];
+                self.images[i] = image;
+                if(i == self.images.count){
+                    [self updateImageView];
+                }
             }
         }];
     }
     return images;
 }
 
+
+- (void)updateImageView{
+    for (int i = 0 ; i < self.imageViewArray.count; i++){
+        if(i == 0){
+            [self.lastImageView setImage:self.images[0]];
+        }
+        [(UIImageView*)self.imageViewArray[i] setImage:self.images[i]];
+    }
+}
 
 - (void)updateImageView:(UIImage*)image WithIndex:(NSInteger)index{
     // when the image download finished, call this function to
@@ -191,7 +204,6 @@
     }
     UIImageView* imageView = (UIImageView*)self.imageViewArray[index];
     [imageView setImage:image];
-    NSLog(@"update %ld",index);
 }
 
 #pragma mark - PrivateMethond
