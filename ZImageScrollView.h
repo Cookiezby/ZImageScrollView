@@ -41,8 +41,8 @@ enum ScrollDirection{
 
 @property (nonatomic) id<TapOnImageDelegate> delegate;
 
-- (instancetype)initWithFrame:(CGRect)frame withImgaes:(NSArray*)images autoScroll:(BOOL)autoScroll unlimited:(BOOL)unlimited;
-- (instancetype)initWithFrame:(CGRect)frame withImgaeURLs:(NSArray *)imageURLs autoScroll:(BOOL)autoScroll unlimited:(BOOL)unlimited;
+- (instancetype)initWithFrame:(CGRect)frame withImages:(NSArray*)images autoScroll:(BOOL)autoScroll unlimited:(BOOL)unlimited;
+- (instancetype)initWithFrame:(CGRect)frame withImageURLs:(NSArray *)imageURLs autoScroll:(BOOL)autoScroll unlimited:(BOOL)unlimited;
 
 
 @end

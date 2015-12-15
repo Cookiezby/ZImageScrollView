@@ -12,7 +12,7 @@
 @interface ZImageScrollView() <UIScrollViewDelegate,UIGestureRecognizerDelegate>
 
 @property(nonatomic) NSArray* imageURLs;
-@property(nonatomic) NSArray* images;
+@property(nonatomic) NSMutableArray* images;
 
 @property (nonatomic) UIScrollView* scrollView;
 @property (nonatomic) UIPageControl* pageControl;
@@ -30,13 +30,14 @@
 
 @implementation ZImageScrollView
 
-- (instancetype)initWithFrame:(CGRect)frame withImgaes:(NSArray*)images autoScroll:(BOOL)autoScroll unlimited:(BOOL)unlimited{
+- (instancetype)initWithFrame:(CGRect)frame withImages:(NSArray*)images autoScroll:(BOOL)autoScroll unlimited:(BOOL)unlimited{
     self = [super initWithFrame:frame];
     if(self){
         // do some custom init here;
-        self.images = images;
+        self.images = [[NSMutableArray alloc]initWithArray:images];
         self.autoScroll = autoScroll;
         self.scrollUnlimted = unlimited;
+        self.direction = DIRECTION_LEFT;
         [self setUp];
         [self setImageView];
         [self startScroll];
@@ -45,9 +46,9 @@
     return self;
 }
 
-- (instancetype)initWithFrame:(CGRect)frame withImgaeURLs:(NSArray *)imageURLs autoScroll:(BOOL)autoScroll unlimited:(BOOL)unlimited{
+- (instancetype)initWithFrame:(CGRect)frame withImageURLs:(NSArray *)imageURLs autoScroll:(BOOL)autoScroll unlimited:(BOOL)unlimited{
     NSArray* images = [self getImageFromURL:imageURLs];
-    return [self initWithFrame:frame withImgaes:images autoScroll:autoScroll unlimited:unlimited];
+    return [self initWithFrame:frame withImages:images autoScroll:autoScroll unlimited:unlimited];
 }
 
 
@@ -173,12 +174,24 @@
     for (NSInteger i = 0; i < imageURLs.count; i++) {
         [[SDWebImageManager sharedManager] downloadImageWithURL:imageURLs[i] options:SDWebImageRetryFailed progress:nil completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
             if (image) {
-                images[i] = image;
-                self.images = images;
+                [self updateImageView:image WithIndex:i];
             }
         }];
     }
     return images;
+}
+
+
+- (void)updateImageView:(UIImage*)image WithIndex:(NSInteger)index{
+    // when the image download finished, call this function to
+    
+    if(index == 0){
+        //update the duplicate imageview of
+        [self.lastImageView setImage:image];
+    }
+    UIImageView* imageView = (UIImageView*)self.imageViewArray[index];
+    [imageView setImage:image];
+    NSLog(@"update %ld",index);
 }
 
 #pragma mark - PrivateMethond
