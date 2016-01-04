@@ -173,12 +173,22 @@
     self.images = images;
     
     for (NSInteger i = 0; i < imageURLs.count; i++) {
+        NSLog(@"%d",i);
+        NSLog(@"%@",imageURLs[i]);
         [[SDWebImageManager sharedManager] downloadImageWithURL:imageURLs[i] options:SDWebImageRetryFailed progress:nil completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
             if (image) {
-                self.images[i] = image;
-                if(i == self.images.count){
-                    [self updateImageView];
-                }
+                //self.images[i] = image;
+                dispatch_async(dispatch_get_main_queue(),^{
+                    /*if(i == (self.images.count-1)){
+                        [self updateImageView :self.images];
+                    }*/
+                    if(i == 0){
+                        [self.lastImageView setImage:image];
+                    }
+
+                    [(UIImageView*)self.imageViewArray[i] setImage:image];
+                    
+                });
             }
         }];
     }
@@ -186,12 +196,12 @@
 }
 
 
-- (void)updateImageView{
+- (void)updateImageView:(NSArray*)imageArray{
     for (int i = 0 ; i < self.imageViewArray.count; i++){
         if(i == 0){
-            [self.lastImageView setImage:self.images[0]];
+            [self.lastImageView setImage:imageArray[0]];
         }
-        [(UIImageView*)self.imageViewArray[i] setImage:self.images[i]];
+        [(UIImageView*)self.imageViewArray[i] setImage:imageArray[0]];
     }
 }
 
