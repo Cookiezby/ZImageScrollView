@@ -5,8 +5,8 @@ two kinds of way to init this view.
 1 init with images.
 
 ```ObjectiveC
-- (instancetype)initWithFrame:(CGRect)frame withImages:(NSArray*)images autoScroll:										
-							(BOOL)autoScroll unlimited:(BOOL)unlimited;
+- (instancetype)initWithFrame:(CGRect)frame withImages:(NSArray*)images autoScroll:
+								  (BOOL)autoScroll unlimited:(BOOL)unlimited;
 ```
 
 
