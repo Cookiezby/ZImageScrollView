@@ -18,7 +18,7 @@ two kinds of way to init this view.
 ```
 
 
-Paramater Explanation
+Paramater Explanation:
 
     
 * autoScroll: the ScrollView will show the image automatically
