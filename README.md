@@ -1,6 +1,6 @@
 # ZImageScrollView
 
-two kinds of way to init this view
+two kinds of way to init this view.
 
 1 init with images
 
