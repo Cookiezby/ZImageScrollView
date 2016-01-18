@@ -2,7 +2,7 @@
 
 two kinds of way to init this view.
 
-1 init with images
+1 init with images.
 
 ```ObjectiveC
 - (instancetype)initWithFrame:(CGRect)frame withImages:(NSArray*)images autoScroll:										
@@ -10,7 +10,7 @@ two kinds of way to init this view.
 ```
 
 
-2 init with imageURLs
+2 init with imageURLs.
 
 ```ObjectiveC
 - (instancetype)initWithFrame:(CGRect)frame withImageURLs:(NSArray *)imageURLs autoScroll:
